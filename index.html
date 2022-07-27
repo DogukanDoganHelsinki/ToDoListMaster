@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner&family=Great+Vibes&family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner&family=Edu+VIC+WA+NT+Beginner&family=Great+Vibes&family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/dist/mc-calendar.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Dogukan TO DO MASTER</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="todo_form">
+        <h1 class="todo_title">Dogukan's Todo List</h1>
+        <div>
+          <button type="submit" class="todo_button">Add</button>
+        </div>
+        <div class="popup" id="popup">
+          <div class="overlay"></div>
+          <div class="popup-content">
+            <h2>Add a new task</h2>
+            <input
+                type="text"
+                class="todo_input"
+                placeholder="What's next?"
+                
+              />
+              <input id="tarih" class="todo_date" type="text" placeholder="Set a deadline" /> 
+            <div class="controls">
+              <button class="close-btn">Close</button>
+              <button type="submit" class="submit-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="todo_container"></div>
+      <div class="todo_container2"></div>
+    </div>
+
+    
+  </div>
+    <script src="/dist/mc-calendar.min.js"></script> 
+    <script src="app.js"></script>
+  </body>
+</html>
