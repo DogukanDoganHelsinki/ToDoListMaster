@@ -163,6 +163,24 @@ body {
 .todo_delete:hover {
   background-color: rgb(172, 39, 16);
 }
+
+.todo_delete2 {
+  background-color: tomato;
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  margin-left: 4px;
+  color: white;
+  border-radius: 4px 4px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s ease all;
+}
+
+.todo_delete2:hover {
+  background-color: rgb(172, 39, 16);
+}
+
 .todo_edit {
   background-color: rgb(30, 101, 55);
   padding: 6px 8px;

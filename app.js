@@ -6,7 +6,6 @@ const todo_container2 = document.querySelector(".todo_container2");
 
 const startConf = () => {
   // baslangic ayarlari
-
   let todos = JSON.parse(localStorage.getItem("todos"));
   todos = todos?.sort((x, y) => x.newDate - y.newDate);
 
@@ -58,6 +57,10 @@ const addTodo = (e) => {
     document.querySelector(".todo_container").firstElementChild.remove();
   }
 
+  while (document.querySelector(".todo_container2").firstElementChild != null) {
+    document.querySelector(".todo_container2").firstElementChild.remove();
+  }
+
   startConf();
 };
 
@@ -73,8 +76,12 @@ const deleteTodo = (e) => {
 };
 
 const deleteAllTodo = (e) => {
-  console.log("deneme");
   const todoAll = e.target.parentElement.parentElement.parentElement;
+
+  let todos = JSON.parse(localStorage.getItem("todos"));
+  todos = todos?.filter((x) => x.isCompleted == false);
+  localStorage.setItem("todos", JSON.stringify(todos));
+  todoAll.remove();
 };
 
 const completeTodo = (e) => {
@@ -208,11 +215,12 @@ const addHTML2 = (todo) => {
   deleteBtn2.addEventListener("click", deleteTodo);
 
   const deleteAllBtn2 = document.createElement("button");
-  deleteAllBtn2.classList.add("todo_delete");
+  deleteAllBtn2.classList.add("todo_delete2");
   deleteAllBtn2.textContent = "Delete All";
   deleteAllBtn2.addEventListener("click", deleteAllTodo);
 
   todoRight2.appendChild(deleteBtn2);
+  todoRight2.appendChild(deleteAllBtn2);
 
   todoDiv2.appendChild(todoLeft2);
   todoDiv2.appendChild(todoRight2);
