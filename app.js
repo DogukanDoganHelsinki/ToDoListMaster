@@ -81,7 +81,9 @@ const deleteAllTodo = (e) => {
   let todos = JSON.parse(localStorage.getItem("todos"));
   todos = todos?.filter((x) => x.isCompleted == false);
   localStorage.setItem("todos", JSON.stringify(todos));
-  todoAll.remove();
+  while (document.querySelector(".todo_container2").firstElementChild != null) {
+    document.querySelector(".todo_container2").firstElementChild.remove();
+  }
 };
 
 const completeTodo = (e) => {
@@ -194,7 +196,7 @@ const addHTML2 = (todo) => {
 
   const todoCb2 = document.createElement("input");
   todoCb2.type = "checkbox";
-  todo.checked = todo.isCompleted;
+  todo.checked = todo?.isCompleted;
   todoCb2.style.display = "none";
   todoCb2.classList.add("todo_cb2");
   todoCb2.addEventListener("click", completeTodo);
