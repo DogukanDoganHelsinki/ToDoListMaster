@@ -32,13 +32,13 @@
           <div class="overlay"></div>
           <div class="popup-content">
             <h2>Add a new task</h2>
+            <input type="text" class="todo_input" placeholder="What's next?" />
             <input
-                type="text"
-                class="todo_input"
-                placeholder="What's next?"
-                
-              />
-              <input id="tarih" class="todo_date" type="text" placeholder="Set a deadline" /> 
+              id="tarih"
+              class="todo_date"
+              type="text"
+              placeholder="Set a deadline"
+            />
             <div class="controls">
               <button class="close-btn">Close</button>
               <button type="submit" class="submit-btn">Submit</button>
@@ -46,13 +46,32 @@
           </div>
         </div>
       </form>
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Edit Your Task</h2>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              id="todo_editInput"
+              class="todo_inputEdit"
+              placeholder="Editlenecek"
+            />
+          </div>
+          <div class="modal-footer">
+            <button class="cancel_btn">Cancel</button>
+            <button class="confirm_btn">Confirm</button>
+          </div>
+        </div>
+      </div>
       <div class="todo_container"></div>
       <div class="todo_container2"></div>
     </div>
 
-    
-  </div>
-    <script src="/dist/mc-calendar.min.js"></script> 
+    <script src="/dist/mc-calendar.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

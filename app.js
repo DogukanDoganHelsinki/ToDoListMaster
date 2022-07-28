@@ -1,8 +1,24 @@
-const form = document.querySelector(".todo_form");
 const input = document.querySelector(".todo_input");
 const date = document.querySelector(".todo_date");
 const todo_container = document.querySelector(".todo_container");
 const todo_container2 = document.querySelector(".todo_container2");
+const modal = document.getElementById("myModal");
+var choosenID;
+
+const eventListeners = () => {
+  document.querySelector(".close").addEventListener("click", closeSecondPopup);
+  document.querySelector(".todo_form").addEventListener("submit", addTodo);
+  document
+    .getElementsByClassName("close")[0]
+    .addEventListener("click", closeSecondPopup);
+  document
+    .querySelector(".cancel_btn")
+    .addEventListener("click", closeSecondPopup);
+  document
+    .querySelector(".confirm_btn")
+    .addEventListener("click", saveTodoPopup);
+  document.querySelector(".todo_button").addEventListener("click", popup);
+};
 
 const startConf = () => {
   // baslangic ayarlari
@@ -103,27 +119,30 @@ const completeTodo = (e) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-const saveTodo = (e) => {
-  const todo = e.target.parentElement.parentElement;
-  const prevText = todo.firstChild.children[1].textContent; // değiştirilmeden önceki değer
-  const newText = todo.firstChild.children[2].value; // editlerken girdiğimiz yeni değer
+const editTodoPopup = (e) => {
+  modal.style.display = "block";
+  choosenID = e.target.id;
 
-  let todos = JSON.parse(localStorage.getItem("todos"));
+  const todo = JSON.parse(localStorage.getItem("todos"));
 
-  todos.forEach((td) => {
-    if (td.text === prevText) td.text = newText;
-  });
-
-  localStorage.setItem("todos", JSON.stringify(todos));
-
-  todo.firstChild.children[1].textContent = newText; // HTML üzerindeki değerini de değiştiriyoruz
-
-  todo.classList.remove("-edited"); // verdiğimiz classı kaldırıyoruz
+  const donenDeger = todo.filter((x) => x.id === choosenID);
+  document.querySelector("#todo_editInput").value = donenDeger[0].text;
 };
 
-const editTodo = (e) => {
-  const todo = e.target.parentElement.parentElement;
-  todo.classList.add("-edited");
+const saveTodoPopup = (e) => {
+  const todo = JSON.parse(localStorage.getItem("todos"));
+  const donenDeger = todo.filter((x) => x.id === choosenID);
+  donenDeger[0].text = document.querySelector("#todo_editInput").value;
+  localStorage.setItem("todos", JSON.stringify(todo));
+  while (document.querySelector(".todo_container").firstElementChild != null) {
+    document.querySelector(".todo_container").firstElementChild.remove();
+  }
+
+  while (document.querySelector(".todo_container2").firstElementChild != null) {
+    document.querySelector(".todo_container2").firstElementChild.remove();
+  }
+  startConf();
+  modal.style.display = "none";
 };
 
 const dateCompare = (item) => {
@@ -149,7 +168,7 @@ const addHTML = (todo) => {
   todoCb.type = "checkbox";
   todoCb.checked = todo.isCompleted;
   todoCb.classList.add("todo_cb");
-  todoCb.addEventListener("click", completeTodo); // direkt olustururken veriyoruz event listenerlari
+  todoCb.addEventListener("click", completeTodo);
 
   const todoText = document.createElement("span");
   todoText.id = todo.id;
@@ -171,15 +190,10 @@ const addHTML = (todo) => {
   const editBtn = document.createElement("button");
   editBtn.classList.add("todo_edit");
   editBtn.textContent = "Edit";
-  editBtn.addEventListener("click", editTodo); // direkt olustururken veriyoruz event listenerlari
-
-  const saveBtn = document.createElement("button");
-  saveBtn.classList.add("todo_save");
-  saveBtn.textContent = "Save";
-  saveBtn.addEventListener("click", saveTodo);
+  editBtn.id = todo.id;
+  editBtn.addEventListener("click", editTodoPopup);
 
   todoRight.appendChild(editBtn);
-  todoRight.appendChild(saveBtn);
 
   todoDiv.appendChild(todoLeft);
   todoDiv.appendChild(todoRight);
@@ -237,6 +251,7 @@ const createPopup = (id) => {
   let submitBtn = popupNode.querySelector(".submit-btn");
 
   const openPopup = () => {
+    const form = document.querySelector(".todo_form");
     popupNode.classList.add("active");
     form.reset();
   };
@@ -245,6 +260,7 @@ const createPopup = (id) => {
   };
 
   const submitPopup = () => {
+    const form = document.querySelector(".todo_form");
     addTodo();
     form.reset();
   };
@@ -257,7 +273,6 @@ const createPopup = (id) => {
 };
 
 let popup = createPopup("#popup");
-document.querySelector(".todo_button").addEventListener("click", popup);
 
 const myDatePicker = MCDatepicker.create({
   el: "#tarih",
@@ -291,6 +306,17 @@ const myDatePicker = MCDatepicker.create({
   ],
 });
 
-startConf();
+// When the user clicks on <span> (x), close the modal
+const closeSecondPopup = () => {
+  modal.style.display = "none";
+};
 
-form.addEventListener("submit", addTodo);
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+startConf();
+eventListeners();
